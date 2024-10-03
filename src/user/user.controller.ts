@@ -1,8 +1,9 @@
-import { Controller, Post, Body } from '@nestjs/common';
-import { plainToInstance } from 'class-transformer';
+import { Controller, Request, Get, Post, Body, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UserResponseDto } from './dto/user-response.dto';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { plainToInstance } from 'class-transformer';
 
 @Controller({
   version: '1',
@@ -13,6 +14,13 @@ export class UserController {
   @Post('register')
   async register(@Body() createUserDto: CreateUserDto): Promise<UserResponseDto> {
     const user = await this.userService.create(createUserDto);
-    return plainToInstance(UserResponseDto, user);
+    return plainToInstance(UserResponseDto, user.get({ plain: true }));
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('user')
+  async getUser(@Request() req): Promise<UserResponseDto> {
+    const user = req.user;
+    return plainToInstance(UserResponseDto, user.get({ plain: true }));
   }
 }
