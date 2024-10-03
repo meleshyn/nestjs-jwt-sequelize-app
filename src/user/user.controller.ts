@@ -20,7 +20,6 @@ export class UserController {
   @UseGuards(JwtAuthGuard)
   @Get('user')
   async getUser(@Request() req): Promise<UserResponseDto> {
-    const user = req.user;
-    return plainToInstance(UserResponseDto, user.get({ plain: true }));
+    return plainToInstance(UserResponseDto, req.user);
   }
 }
