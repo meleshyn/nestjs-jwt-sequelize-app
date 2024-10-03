@@ -9,7 +9,8 @@ import { AuthModule } from './auth/auth.module';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: process.env.NODE_ENV === 'production' ? '.env' : '.env.development',
+      envFilePath:
+        process.env.NODE_ENV === 'production' ? '.env' : '.env.development',
     }),
     SequelizeModule.forRoot({
       dialect: 'mysql',
@@ -23,7 +24,7 @@ import { AuthModule } from './auth/auth.module';
       synchronize: false,
     }),
     UserModule,
-    AuthModule
+    AuthModule,
   ],
 })
 export class AppModule {}

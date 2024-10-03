@@ -1,4 +1,11 @@
-import { Controller, Request, Get, Post, Body, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Request,
+  Get,
+  Post,
+  Body,
+  UseGuards,
+} from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UserResponseDto } from './dto/user-response.dto';
@@ -12,7 +19,9 @@ export class UserController {
   constructor(private userService: UserService) {}
 
   @Post('register')
-  async register(@Body() createUserDto: CreateUserDto): Promise<UserResponseDto> {
+  async register(
+    @Body() createUserDto: CreateUserDto,
+  ): Promise<UserResponseDto> {
     const user = await this.userService.create(createUserDto);
     return plainToInstance(UserResponseDto, user.get({ plain: true }));
   }

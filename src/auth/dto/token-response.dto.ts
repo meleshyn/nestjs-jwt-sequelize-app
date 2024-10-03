@@ -1,4 +1,3 @@
 export class TokenResponseDto {
-    access_token: string;
-  }
-  
+  access_token: string;
+}
